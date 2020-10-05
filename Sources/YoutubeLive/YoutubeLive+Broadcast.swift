@@ -11,21 +11,42 @@ import Combine
 public extension YoutubeLive.Client {
     func getLiveBroadcasts(
         part: [GetLiveBroadcasts.Part] = [.id],
+        filter: GetLiveBroadcasts.Filter = .mine,
         broadcastType: GetLiveBroadcasts.BroadcastType = .persistent,
-        mine: Bool = false,
         maxResults: Int = 5,
         pageToken: String? = nil
     ) -> AnyPublisher<GetLiveBroadcasts.Response, Error> {
-        self.get(path: "/liveBroadcasts", queryItems: [
-            .init(name: "part", value: part.map(\.rawValue).joined(separator: ",")),
-            .init(name: "broadcastType", value: broadcastType.rawValue),
-            .init(name: "mine", value: "\(mine)"),
-            .init(name: "maxResults", value: "\(maxResults)"),
-            .init(name: "pageToken", value: pageToken)
-        ])
+        var queryItems: [URLQueryItem] = []
+        queryItems.append(.init(name: "part", value: part.map(\.rawValue).joined(separator: ",")))
+        queryItems.append(.init(name: "broadcastType", value: broadcastType.rawValue))
+        queryItems.append(.init(name: "maxResults", value: "\(maxResults)"))
+        queryItems.append(.init(name: "pageToken", value: pageToken))
+        switch filter {
+        case let .broadcastStatus(status):
+            queryItems.append(.init(name: "broadcastStatus", value: status.rawValue))
+        case let .id(ids):
+            queryItems.append(.init(name: "id", value: ids.joined(separator: ",")))
+        case .mine:
+            queryItems.append(.init(name: "mine", value: "\(true)"))
+        }
+        
+        return self.get(path: "/liveBroadcasts", queryItems: queryItems)
     }
     
     enum GetLiveBroadcasts {
+        public enum Filter {
+            case broadcastStatus(BroadcastStatus)
+            case id([String])
+            case mine
+            
+            public enum BroadcastStatus: String {
+                case active
+                case all
+                case completed
+                case upcoming
+            }
+        }
+        
         public enum Part: String {
             case id
             case snippet

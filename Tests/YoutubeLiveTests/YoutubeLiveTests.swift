@@ -11,7 +11,7 @@ final class YoutubeLiveTests: XCTestCase {
     
     /// Hot test
     func testGetLiveBroadcasts() throws {
-        let recorder = client.getLiveBroadcasts(mine: true).record()
+        let recorder = client.getLiveBroadcasts(filter: .mine).record()
         let elements = try wait(for: recorder.elements, timeout: 5.0)
         dump(elements[0])
         XCTAssertEqual(elements[0].items.count, 1)
