@@ -7,18 +7,28 @@
 import Foundation
 import Combine
 
+///https://developers.google.com/youtube/v3/live/docs/liveStreams/list
 public extension YoutubeLive.Client {
     func getLiveStreams(
         part: [GetLiveStreams.Part] = [.id],
-        mine: Bool = false
+        filter: GetLiveStreams.Filter = .mine
     ) -> AnyPublisher<GetLiveStreams.Response, Error> {
-        self.get(path: "/liveStreams", queryItems: [
-            .init(name: "part", value: part.map(\.rawValue).joined(separator: ",")),
-            .init(name: "mine", value: "\(mine)")
-        ])
+        var queryItems: [URLQueryItem] = [.init(name: "part", value: part.map(\.rawValue).joined(separator: ","))]
+        switch filter {
+        case let .id(id):
+            queryItems.append(.init(name: "id", value: id))
+        case .mine:
+            queryItems.append(.init(name: "mine", value: "\(true)"))
+        }
+        return self.get(path: "/liveStreams", queryItems: queryItems)
     }
     
     enum GetLiveStreams {
+        public enum Filter {
+            case id(String)
+            case mine
+        }
+        
         public enum Part: String {
             case id
             case snippet

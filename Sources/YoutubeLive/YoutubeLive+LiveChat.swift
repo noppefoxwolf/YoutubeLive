@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 
+///https://developers.google.com/youtube/v3/live/docs/liveChatMessages#resource
 public extension YoutubeLive.Client {
     func getLiveChatMessages(
         liveChatID: String,
