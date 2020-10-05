@@ -92,7 +92,7 @@ public extension YoutubeLive {
             public let channelId: String
             public let title: String
             public let description: String
-            public let isDefaultStream: String
+            public let isDefaultStream: Bool
         }
         public struct Cdn: Codable {
             public let ingestionType: IngestionType
