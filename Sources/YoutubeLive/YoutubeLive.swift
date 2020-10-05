@@ -7,6 +7,10 @@ public enum YoutubeLive {
     public struct Client {
         let accessToken: String
         
+        public init(accessToken: String) {
+            self.accessToken = accessToken
+        }
+        
         func get<T: Codable>(path: String, queryItems: [URLQueryItem] = []) -> AnyPublisher<T, Error> {
             let endpoint = YoutubeLive.baseURL.appendingPathComponent(path)
             var urlComponents = URLComponents(url: endpoint, resolvingAgainstBaseURL: false)!
