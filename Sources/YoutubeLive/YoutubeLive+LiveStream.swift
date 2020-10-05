@@ -15,8 +15,8 @@ public extension YoutubeLive.Client {
     ) -> AnyPublisher<GetLiveStreams.Response, Error> {
         var queryItems: [URLQueryItem] = [.init(name: "part", value: part.map(\.rawValue).joined(separator: ","))]
         switch filter {
-        case let .id(id):
-            queryItems.append(.init(name: "id", value: id))
+        case let .id(ids):
+            queryItems.append(.init(name: "id", value: ids.joined(separator: ",")))
         case .mine:
             queryItems.append(.init(name: "mine", value: "\(true)"))
         }
@@ -25,7 +25,7 @@ public extension YoutubeLive.Client {
     
     enum GetLiveStreams {
         public enum Filter {
-            case id(String)
+            case id([String])
             case mine
         }
         

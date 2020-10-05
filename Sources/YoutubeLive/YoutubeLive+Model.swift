@@ -88,8 +88,11 @@ public extension YoutubeLive {
         public let contentDetails: ContentDetails?
         
         public struct Snippet: Codable {
-            let channelId: String
-            let title: String
+            public let publishedAt: Date
+            public let channelId: String
+            public let title: String
+            public let description: String
+            public let isDefaultStream: String
         }
         public struct Cdn: Codable {
             public let ingestionType: IngestionType
