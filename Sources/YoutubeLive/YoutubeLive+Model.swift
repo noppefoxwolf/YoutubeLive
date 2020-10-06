@@ -37,7 +37,7 @@ public extension YoutubeLive {
             public let channelId: String
             public let publishedAt: Date
             public let title: String
-            public let thumbnails: [Thumbnail.SizeKey : Thumbnail]
+//            public let thumbnails: [Thumbnail.SizeKey : Thumbnail]
             public let scheduledStartTime: Date
             public let actualStartTime: Date?
             public let actualEndTime: Date?
