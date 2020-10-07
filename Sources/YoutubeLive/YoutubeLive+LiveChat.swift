@@ -14,7 +14,7 @@ public extension YoutubeLive.Client {
         liveChatID: String,
         part: [GetLiveChatMessages.Part] = [.id]
     ) -> AnyPublisher<GetLiveChatMessages.Response, Error> {
-        self.get(path: "/liveStreams", queryItems: [
+        self.get(path: "/liveChat/messages", queryItems: [
             .init(name: "part", value: part.map(\.rawValue).joined(separator: ",")),
             .init(name: "liveChatId", value: liveChatID)
         ])
