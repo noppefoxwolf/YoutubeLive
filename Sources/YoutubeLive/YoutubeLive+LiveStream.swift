@@ -20,7 +20,7 @@ public extension YoutubeLive.Client {
         case .mine:
             queryItems.append(.init(name: "mine", value: "\(true)"))
         }
-        return self.get(path: "/liveStreams", queryItems: queryItems)
+        return self.get(path: "/liveChat/messages", queryItems: queryItems)
     }
     
     enum GetLiveStreams {
